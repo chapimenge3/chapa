@@ -39,9 +39,3 @@ jobs:
       with:
         name: __token__
         version: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Logging
-      uses: actions/log@v1
-      with:
-        content: "Successfully published package"
-        level: "info"
-        event: "push"

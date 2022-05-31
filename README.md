@@ -1,8 +1,8 @@
 # Chapa
+
 [![Version](https://img.shields.io/static/v1?label=version&message=0.0.1&color=green)](https://travis-ci.com/chapimenge3/chapa)
 [![Build](https://github.com/chapimenge3/chapa/actions/workflows/Linter.yml/badge.svg)](https://travis-ci.com/chapimenge3/chapa)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://choosealicense.com/licenses/mit)
-
 
 Unofficial Python SDK for [Chapa API](https://developer.chapa.co/docs).
 
@@ -11,11 +11,13 @@ Unofficial Python SDK for [Chapa API](https://developer.chapa.co/docs).
 This is a Python SDK for Chapa API. It is not official and is not supported by Chapa. It is provided as-is. Anyone can contribute to this project.
 
 ## Installation
+
 ```
 pip install chapa
 ```
 
 ## Usage
+
 ```python
 from chapa import Chapa
 
@@ -52,7 +54,47 @@ response = chapa.verify('<your-unique-transation-id>')
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. After that free to contribute to this project. Please Read the [CONTRIBUTING.md](https://github.com/chapimenge3/chapa) file for more information.
 
-Please make sure to update tests as appropriate. 
+Please make sure to update tests as appropriate.
+
+## API Reference
+
+### Create new Transaction
+
+Base endpoint https://api.chapa.co/v1
+
+```http
+  POST /transaction/initialize
+```
+
+| Parameter               | Type      | Description                                                                                                                                                                                        |
+| :---------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`                   | `string`  | **Required**. This will be your public key from Chapa. When on test mode use the test key, and when on live mode use the live key.                                                                 |
+| `email`                 | `string`  | **Required**. A customer’s email. address                                                                                                                                                          |
+| `amount`                | `integer` | **Required**. The amount you will be charging your customer.                                                                                                                                       |
+| `first_name`            | `string`  | **Required**. Your API key                                                                                                                                                                         |
+| `last_name`             | `string`  | **Required**. A customer’s last name.                                                                                                                                                              |
+| `tx_ref`                | `string`  | **Required**. A unique reference given to each transaction.                                                                                                                                        |
+| `currency`              | `string`  | **Required**. The currency in which all the charges are made. Currency allowed is ETB.                                                                                                             |
+| `redirect_url`          | `string`  | The URL to redirect the customer to after payment is done.                                                                                                                                         |
+| `customization[tiitle]` | `string`  | The customizations field (optional) allows you to customize the look and feel of the payment modal. You can set a logo, the store name to be displayed (title), and a description for the payment. |
+
+| HEADER Key      | Value                   |
+| :-------------- | :---------------------- |
+| `Authorization` | `Bearer <YOUR-API-KEY>` |
+
+### Verify Transaction
+
+```http
+  GET /transaction/verify/${tx_ref}
+```
+
+| Parameter | Type     | Description                                                |
+| :-------- | :------- | :--------------------------------------------------------- |
+| `tx_ref`  | `string` | **Required**. A unique reference given to each transaction |
+
+## FAQ
+
+#### No Available Questions!
 
 ## Run Locally
 
@@ -75,6 +117,7 @@ pip install -r requirements.txt
 ```
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Author

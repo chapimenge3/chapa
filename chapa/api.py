@@ -3,6 +3,7 @@ API SDK for Chapa Payment Gateway
 """
 # pylint: disable=no-self-use
 # pylint: disable=too-few-public-methods
+# pylint: disable=too-many-branches
 # pylint: disable=too-many-arguments
 import re
 import json
@@ -132,8 +133,8 @@ class Chapa:
 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("invalid email")
-        else:
-            data['email'] = email
+
+        data['email'] = email
 
         if redirect_url:
             data['redirect_url'] = redirect_url

@@ -1,7 +1,9 @@
 # Github action for Linters
 name: Linter
 
-on: [push]
+on:
+  - push
+  - pull_request
 
 # write python test workflow for pylint
 jobs:
@@ -25,3 +27,22 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint chapa/*
+  
+  Publish-Package:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    if:
+      - github.event_name == "push" && github.ref == "refs/heads/main"
+    steps:
+    - name: Publish the package
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        name: __token__
+        version: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Logging
+      uses: actions/log@v1
+      with:
+        content: "Successfully published package"
+        level: "info"
+        event: "push"

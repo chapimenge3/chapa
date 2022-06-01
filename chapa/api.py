@@ -1,7 +1,6 @@
 """
 API SDK for Chapa Payment Gateway
 """
-# pylint: disable=no-self-use
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-arguments

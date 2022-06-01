@@ -26,7 +26,7 @@ data = {
     'amount': 1000,
     'first_name': 'Abebe',
     'last_name': 'Bikila',
-    'tx_ref': '<your-unique-translation-id>',
+    'tx_ref': '<your-unique-transaction-id>',
     # optional
     'redirect_url': 'https://www.your-site.com/callback',
     'customization': {
@@ -47,7 +47,7 @@ print(response.data.checkout_url)
 
 
 # How to verify a transaction
-response = chapa.verify('<your-unique-translation-id>')
+response = chapa.verify('<your-unique-transaction-id>')
 ```
 
 ## Contributing

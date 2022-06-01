@@ -4,8 +4,7 @@
 
 ## Table of Contents
 
-- [Contributing to Chapa](#contributing-to-chapa)
-  - [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Reporting Bugs](#reporting-bugs)
     - [How to report bugs](#how-to-report-bugs)

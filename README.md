@@ -26,7 +26,7 @@ data = {
     'amount': 1000,
     'first_name': 'Abebe',
     'last_name': 'Bikila',
-    'tx_ref': '<your-unique-transation-id>',
+    'tx_ref': '<your-unique-transaction-id>',
     # optional
     'redirect_url': 'https://www.your-site.com/callback',
     'customization': {
@@ -43,16 +43,16 @@ print(response['data']['checkout_url'])
 chapa = Chapa('<your_api_key>', response_format='obj')
 response = chapa.initialize(**data)
 # notice how the response is an object
-print(reponse.data.checkout_url)
+print(response.data.checkout_url)
 
 
 # How to verify a transaction
-response = chapa.verify('<your-unique-transation-id>')
+response = chapa.verify('<your-unique-transaction-id>')
 ```
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. After that free to contribute to this project. Please Read the [CONTRIBUTING.md](https://github.com/chapimenge3/chapa) file for more information.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. After that free to contribute to this project. Please read the [CONTRIBUTING.md](https://github.com/chapimenge3/chapa/blob/main/CONTRIBUTING.md) file for more information.
 
 Please make sure to update tests as appropriate.
 
@@ -76,7 +76,7 @@ Base endpoint https://api.chapa.co/v1
 | `tx_ref`                | `string`  | **Required**. A unique reference given to each transaction.                                                                                                                                        |
 | `currency`              | `string`  | **Required**. The currency in which all the charges are made. Currency allowed is ETB.                                                                                                             |
 | `redirect_url`          | `string`  | The URL to redirect the customer to after payment is done.                                                                                                                                         |
-| `customization[tiitle]` | `string`  | The customizations field (optional) allows you to customize the look and feel of the payment modal. You can set a logo, the store name to be displayed (title), and a description for the payment. |
+| `customization[title]` | `string`  | The customizations field (optional) allows you to customize the look and feel of the payment modal. You can set a logo, the store name to be displayed (title), and a description for the payment. |
 
 | HEADER Key      | Value                   |
 | :-------------- | :---------------------- |

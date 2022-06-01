@@ -35,13 +35,13 @@ data = {
     }
 }
 
-chapa = Chapa(api_key='<your_api_key>')
-response = chapa.intialize(**data)
-print(reponse['data']['checkout_url'])
+chapa = Chapa('<your_api_key>')
+response = chapa.initialize(**data)
+print(response['data']['checkout_url'])
 
 # Another Implementation
-chapa = Chapa(api_key='<your_api_key>', response_format='obj')
-response = chapa.intialize(**data)
+chapa = Chapa('<your_api_key>', response_format='obj')
+response = chapa.initialize(**data)
 # notice how the response is an object
 print(reponse.data.checkout_url)
 

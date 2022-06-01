@@ -7,7 +7,7 @@ API SDK for Chapa Payment Gateway
 # pylint: disable=too-many-arguments
 import re
 import json
-from requests import Session
+import requests
 
 
 class Response:
@@ -22,16 +22,15 @@ class Chapa:
     Simple SDK for Chapa Payment gateway
     """
 
-    def __init__(self, key, base_ur='https://api.chapa.co', api_version='v1',
-                 response_format='dict'):
-        self._key = key
+    def __init__(self, secret, base_ur='https://api.chapa.co', api_version='v1',
+                 response_format='json'):
+        self._key = secret
         self.base_url = base_ur
         self.api_version = api_version
-        if response_format and response_format not in ['json', 'obj']:
+        if response_format and response_format in ['json', 'obj']:
             self.response_format = response_format
         else:
             raise ValueError('response_format must be \'json\' or \'obj\'')
-        self.request = Session()
 
         self.headers = {
             'Authorization': f'Bearer {self._key}'
@@ -62,8 +61,8 @@ class Chapa:
         else:
             headers = self.headers
 
-        func = getattr(self.request, method)
-        response = func(url, json=data, params=params)
+        func = getattr(requests, method)
+        response = func(url, data=data, headers=headers)
         return getattr(response, "json", lambda: response.text)()
 
     def convert_response(self, response):
@@ -90,8 +89,8 @@ class Chapa:
 
         return res
 
-    def intialze(self, email, amount, first_name, last_name, tx_ref, currency='ETB',
-                 redirect_url=None, customization=None, headers=None):
+    def initialize(self, email: str, amount: int, first_name: str, last_name: str, tx_ref: str,
+                   currency='ETB', redirect_url=None, customization=None, headers=None):
         """
         Initialize the Transaction
 
@@ -128,8 +127,8 @@ class Chapa:
         elif isinstance(amount, int):
             if amount < 0:
                 raise ValueError("invalid amount")
-        else:
-            data['amount'] = amount
+
+        data['amount'] = amount
 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("invalid email")

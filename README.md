@@ -52,7 +52,7 @@ response = chapa.verify('<your-unique-translation-id>')
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. After that free to contribute to this project. Please Read the [CONTRIBUTING.md](https://github.com/chapimenge3/chapa) file for more information.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. After that free to contribute to this project. Please read the [CONTRIBUTING.md](https://github.com/chapimenge3/chapa/blob/main/CONTRIBUTING.md) file for more information.
 
 Please make sure to update tests as appropriate.
 

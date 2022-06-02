@@ -28,7 +28,7 @@ data = {
     'last_name': 'Bikila',
     'tx_ref': '<your-unique-transaction-id>',
     # optional
-    'redirect_url': 'https://www.your-site.com/callback',
+    'callback_url': 'https://www.your-site.com/callback',
     'customization': {
         'title': '<Your-Company>',
         'description': 'Payment for your services',
@@ -75,7 +75,7 @@ Base endpoint https://api.chapa.co/v1
 | `last_name`             | `string`  | **Required**. A customer’s last name.                                                                                                                                                              |
 | `tx_ref`                | `string`  | **Required**. A unique reference given to each transaction.                                                                                                                                        |
 | `currency`              | `string`  | **Required**. The currency in which all the charges are made. Currency allowed is ETB.                                                                                                             |
-| `redirect_url`          | `string`  | The URL to redirect the customer to after payment is done.                                                                                                                                         |
+| `callback_url`          | `string`  | The URL to redirect the customer to after payment is done.                                                                                                                                         |
 | `customization[title]` | `string`  | The customizations field (optional) allows you to customize the look and feel of the payment modal. You can set a logo, the store name to be displayed (title), and a description for the payment. |
 
 | HEADER Key      | Value                   |

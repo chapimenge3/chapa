@@ -89,7 +89,7 @@ class Chapa:
         return res
 
     def initialize(self, email: str, amount: int, first_name: str, last_name: str, tx_ref: str,
-                   currency='ETB', redirect_url=None, customization=None, headers=None):
+                   currency='ETB', callback_url=None, customization=None, headers=None):
         """
         Initialize the Transaction
 
@@ -100,7 +100,7 @@ class Chapa:
             last_name (str): last name of the customer
             tx_ref (str): your transaction id
             currency (str, optional): currency the transaction. Defaults to 'ETB'.
-            redirect_url (str, optional): url for the customer to redirect after payment.
+            callback_url (str, optional): url for the customer to redirect after payment.
                                           Defaults to None.
             customization (dict, optional): customization, currently 'title' and 'description'
                                             are available. Defaults to None.
@@ -134,8 +134,8 @@ class Chapa:
 
         data['email'] = email
 
-        if redirect_url:
-            data['redirect_url'] = redirect_url
+        if callback_url:
+            data['callback_url'] = callback_url
 
         if customization:
             if 'title' in customization:

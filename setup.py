@@ -24,7 +24,7 @@ setuptools.setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     package_dir={"chapa": "chapa"},
-    packages=setuptools.find_packages(where="chapa"),
+    packages=setuptools.find_packages(),
     python_requires=">=3.6",
     install_requires=[
         "requests",

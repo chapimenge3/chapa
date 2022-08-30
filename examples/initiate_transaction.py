@@ -1,4 +1,11 @@
 from chapa import Chapa
+import random
+import string
+
+def generete_tx_ref(length):
+    #Generate a transaction reference
+    tx_ref = string.ascii_lowercase
+    return ''.join(random.choice(tx_ref) for i in range(length))
 
 
 def checkout():
@@ -8,7 +15,7 @@ def checkout():
 		'amount': 1311.00, # total payment
 		'first_name': 'Abebe', # customer/client first name
 		'last_name': 'Bikila', # customer/client last name
-		'tx_ref': '[transaction_id] or [order_id]',
+		'tx_ref': generete_tx_ref(12),
 		
 		# Optional fields
 		'callback_url': 'your_callback_url', # after successful payment chapa will redirect your customer/client to this url

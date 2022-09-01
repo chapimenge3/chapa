@@ -1,0 +1,47 @@
+name: Deployment
+
+# deploy package to pypi on condition of 
+# push to main branch
+# and release published
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  Publish-Package:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+    
+    - name: Version the package
+      run: |
+        echo "__version__ = '${{ github.ref_name }}'" > chapa/__init__.py
+        export CHAPA_VERSION=${{ github.ref_name }}
+
+    - name: Install pypa/build
+      run: >-
+        python -m
+        pip install
+        build
+        --user
+    - name: Build a binary wheel and a source tarball
+      run: >-
+        python -m
+        build
+        --sdist
+        --wheel
+        --outdir dist/
+        .
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        skip_existing: true

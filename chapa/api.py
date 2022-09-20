@@ -170,3 +170,18 @@ class Chapa:
             headers=headers
         )
         return response
+
+    def get_banks(self, headers=None):
+        """Get the list of all banks
+
+        Response:
+            dict: response from the server
+            response(Response): response object of the response data return from the Chapa server.
+        """
+        response = self._construct_request(
+            url=f'{self.base_url}/{self.api_version}/banks',
+            method="get",
+            headers=headers
+        )
+        return response
+        

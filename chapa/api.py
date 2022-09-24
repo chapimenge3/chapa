@@ -169,7 +169,7 @@ class Chapa:
             headers=headers
         )
         return response
-    
+
     def get_banks(self, headers=None):
         """Get the list of all banks
         Response:
@@ -200,7 +200,8 @@ class Chapa:
             account_name (str): The vendor/merchant account`s name matches from the bank account
             bank_code (str): The bank id (you can get this from the get_banks method)
             account_number (str): The bank account number for this subaccount
-            split_type (str): The type of split you want to use with this subaccount (percentage or flat)
+            split_type (str): The type of split you want to use with this subaccount
+                              (percentage or flat)
             split_value (float): The amount you want to get as commission on each transaction
 
         Response:

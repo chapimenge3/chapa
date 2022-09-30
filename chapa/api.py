@@ -169,3 +169,57 @@ class Chapa:
             headers=headers
         )
         return response
+
+    def get_banks(self, headers=None):
+        """Get the list of all banks
+        Response:
+            dict: response from the server
+            response(Response): response object of the response data return from the Chapa server.
+        """
+        response = self._construct_request(
+            url=f"{self.base_url}/{self.api_version}/banks",
+            method="get",
+            headers=headers,
+        )
+        return response
+
+    def create_subaccount(
+        self,
+        business_name: str,
+        account_name: str,
+        bank_code: str,
+        account_number: str,
+        split_type: str,
+        split_value: float,
+        headers=None,
+    ):
+        """Create a subaccount
+
+        Args:
+            business_name (str): The vendor/merchant detail the subaccount for
+            account_name (str): The vendor/merchant account`s name matches from the bank account
+            bank_code (str): The bank id (you can get this from the get_banks method)
+            account_number (str): The bank account number for this subaccount
+            split_type (str): The type of split you want to use with this subaccount
+                              (percentage or flat)
+            split_value (float): The amount you want to get as commission on each transaction
+
+        Response:
+            dict: response from the server
+            response(Response): response object of the response data return from the Chapa server.
+        """
+        data = {
+            "business_name": business_name,
+            "account_name": account_name,
+            "bank_code": bank_code,
+            "account_number": account_number,
+            "split_value": split_value,
+            "split_type": split_type,
+        }
+        response = self._construct_request(
+            url=f"{self.base_url}/{self.api_version}/subaccount",
+            method="post",
+            data=data,
+            headers=headers,
+        )
+        return response

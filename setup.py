@@ -5,7 +5,7 @@ import os
 with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
-version = os.environ.get('CHAPA_VERSION')
+version = os.environ.get('CHAPA_VERSION', '0.0.5')
 
 setuptools.setup(
     name='chapa',

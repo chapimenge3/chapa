@@ -89,7 +89,7 @@ class Chapa:
         return res
 
     def initialize(self, email: str, amount: int, first_name: str, last_name: str, tx_ref: str,
-                   currency='ETB', callback_url=None, customization=None, headers=None):
+                   currency='ETB', callback_url=None, return_url=None, customization=None, headers=None, **kwargs):
         """
         Initialize the Transaction
 
@@ -102,6 +102,8 @@ class Chapa:
             currency (str, optional): currency the transaction. Defaults to 'ETB'.
             callback_url (str, optional): url for the customer to redirect after payment.
                                           Defaults to None.
+            return_url (str, optional): Web address to redirect the user after payment is successful.
+                                        Defaults to None.
             customization (dict, optional): customization, currently 'title' and 'description'
                                             are available. Defaults to None.
             headers(dict, optional): header to attach on the request. Default to None
@@ -117,6 +119,9 @@ class Chapa:
             'tx_ref': tx_ref,
             'currency': currency,
         }
+
+        if kwargs:
+            data.update(kwargs)
 
         if not isinstance(amount, int):
             if str(amount).replace('.', '', 1).isdigit() and float(amount) > 0:
@@ -170,8 +175,110 @@ class Chapa:
         )
         return response
 
+    def create_subaccount(self, business_name: str, account_name: str, bank_code: str, account_number: str, split_value: str, split_type: str, headers=None, **kwargs):
+        """
+        Create a subaccount for split payment
+
+        Args:
+            business_name (str): business name
+            account_name (str): account name
+            bank_code (str): bank code
+            account_number (str): account number
+            split_value (str): split value
+            split_type (str): split type
+            headers(dict, optional): header to attach on the request. Default to None
+            **kwargs: additional data to be sent to the server
+
+        Return:
+            dict: response from the server
+            response(Response): response object of the response data return from the Chapa server.
+        """
+
+        data = {
+            'business_name': business_name,
+            'account_name': account_name,
+            'bank_code': bank_code,
+            'account_number': account_number,
+            'split_value': split_value,
+            'split_type': split_type,
+        }
+
+        if kwargs:
+            data.update(kwargs)
+
+        response = self._construct_request(
+            url=f'{self.base_url}/{self.api_version}/subaccount',
+            method="post",
+            data=data,
+            headers=headers
+        )
+        return response
+
+    def initialize_split_payment(self, amount: int, currency: str, email: str, first_name: str, last_name: str, tx_ref: str, callback_url: str, return_url: str, subaccount_id: str, headers=None, **kwargs):
+        """
+        Initialize split payment transaction
+
+        Args:
+            email (str): customer email
+            amount (int): amount to be paid
+            first_name (str): first name of the customer
+            last_name (str): last name of the customer
+            tx_ref (str): your transaction id
+            currency (str, optional): currency the transaction. Defaults to 'ETB'.
+            callback_url (str, optional): url for the customer to redirect after payment.
+                                          Defaults to None.
+            return_url (str, optional): url for the customer to redirect after payment.
+                                          Defaults to None.
+            subaccount_id (str, optional): subaccount id to split payment.
+                                          Defaults to None.
+            headers(dict, optional): header to attach on the request. Default to None
+            **kwargs: additional data to be sent to the server
+
+        Return:
+            dict: response from the server
+            response(Response): response object of the response data return from the Chapa server.
+        """
+
+        data = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'tx_ref': tx_ref,
+            'currency': currency,
+            'callback_url': callback_url,
+            'return_url': return_url,
+            'subaccount_id': subaccount_id
+        }
+
+        if kwargs:
+            data.update(kwargs)
+
+        if not isinstance(amount, int):
+            if str(amount).replace('.', '', 1).isdigit() and float(amount) > 0:
+                pass
+            else:
+                raise ValueError("invalid amount")
+        elif isinstance(amount, int):
+            if amount < 0:
+                raise ValueError("invalid amount")
+
+        data['amount'] = amount
+
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            raise ValueError("invalid email")
+
+        data['email'] = email
+
+        response = self._construct_request(
+            url=f'{self.base_url}/{self.api_version}/transaction/initialize',
+            method="post",
+            data=data,
+            headers=headers
+        )
+        return response
+
     def get_banks(self, headers=None):
         """Get the list of all banks
+
         Response:
             dict: response from the server
             response(Response): response object of the response data return from the Chapa server.
@@ -179,47 +286,6 @@ class Chapa:
         response = self._construct_request(
             url=f"{self.base_url}/{self.api_version}/banks",
             method="get",
-            headers=headers,
-        )
-        return response
-
-    def create_subaccount(
-        self,
-        business_name: str,
-        account_name: str,
-        bank_code: str,
-        account_number: str,
-        split_type: str,
-        split_value: float,
-        headers=None,
-    ):
-        """Create a subaccount
-
-        Args:
-            business_name (str): The vendor/merchant detail the subaccount for
-            account_name (str): The vendor/merchant account`s name matches from the bank account
-            bank_code (str): The bank id (you can get this from the get_banks method)
-            account_number (str): The bank account number for this subaccount
-            split_type (str): The type of split you want to use with this subaccount
-                              (percentage or flat)
-            split_value (float): The amount you want to get as commission on each transaction
-
-        Response:
-            dict: response from the server
-            response(Response): response object of the response data return from the Chapa server.
-        """
-        data = {
-            "business_name": business_name,
-            "account_name": account_name,
-            "bank_code": bank_code,
-            "account_number": account_number,
-            "split_value": split_value,
-            "split_type": split_type,
-        }
-        response = self._construct_request(
-            url=f"{self.base_url}/{self.api_version}/subaccount",
-            method="post",
-            data=data,
             headers=headers,
         )
         return response

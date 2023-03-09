@@ -11,9 +11,24 @@ import requests
 
 class Response:
     """Custom Response class for SMS handling."""
-
     def __init__(self, dict1):
         self.__dict__.update(dict1)
+
+
+def convert_response(response):
+    """
+    Convert Response data to a Response object
+
+    Args:
+        response (dict): The response data to convert
+
+    Returns:
+        Response: The converted response
+    """
+    if not isinstance(response, dict):
+        return response
+
+    return json.loads(json.dumps(response), object_hook=Response)
 
 
 class Chapa:
@@ -64,32 +79,18 @@ class Chapa:
         response = func(url, data=data, headers=headers)
         return getattr(response, "json", lambda: response.text)()
 
-    def convert_response(self, response):
-        """
-        Convert Response data to a Response object
-
-        Args:
-            response (dict): The response data to convert
-
-        Returns:
-            Response: The converted response
-        """
-        if not isinstance(response, dict):
-            return response
-
-        return json.loads(json.dumps(response), object_hook=Response)
-
     def _construct_request(self, *args, **kwargs):
         """Construct the request to send to the API"""
 
         res = self.send_request(*args, **kwargs)
         if self.response_format == "obj" and isinstance(res, dict):
-            return self.convert_response(res)
+            return convert_response(res)
 
         return res
 
     def initialize(self, email: str, amount: int, first_name: str, last_name: str, tx_ref: str,
-                   currency='ETB', callback_url=None, return_url=None, customization=None, headers=None, **kwargs):
+                   currency='ETB', callback_url=None, return_url=None, customization=None,
+                   headers=None, **kwargs):
         """
         Initialize the Transaction
 
@@ -102,7 +103,8 @@ class Chapa:
             currency (str, optional): currency the transaction. Defaults to 'ETB'.
             callback_url (str, optional): url for the customer to redirect after payment.
                                           Defaults to None.
-            return_url (str, optional): Web address to redirect the user after payment is successful.
+            return_url (str, optional): Web address to redirect the user after payment
+                                        is successful.
                                         Defaults to None.
             customization (dict, optional): customization, currently 'title' and 'description'
                                             are available. Defaults to None.
@@ -118,6 +120,7 @@ class Chapa:
             'last_name': last_name,
             'tx_ref': tx_ref,
             'currency': currency,
+            'return_url': return_url
         }
 
         if kwargs:
@@ -175,7 +178,9 @@ class Chapa:
         )
         return response
 
-    def create_subaccount(self, business_name: str, account_name: str, bank_code: str, account_number: str, split_value: str, split_type: str, headers=None, **kwargs):
+    def create_subaccount(self, business_name: str, account_name: str, bank_code: str,
+                          account_number: str, split_value: str, split_type: str,
+                          headers=None, **kwargs):
         """
         Create a subaccount for split payment
 
@@ -214,7 +219,9 @@ class Chapa:
         )
         return response
 
-    def initialize_split_payment(self, amount: int, currency: str, email: str, first_name: str, last_name: str, tx_ref: str, callback_url: str, return_url: str, subaccount_id: str, headers=None, **kwargs):
+    def initialize_split_payment(self, amount: int, currency: str, email: str, first_name: str,
+                                 last_name: str, tx_ref: str, callback_url: str, return_url: str,
+                                 subaccount_id: str, headers=None, **kwargs):
         """
         Initialize split payment transaction
 

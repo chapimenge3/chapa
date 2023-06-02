@@ -119,8 +119,8 @@ class Chapa:
             currency (str, optional): currency the transaction. Defaults to 'ETB'.
             callback_url (str, optional): function that runs when payment is successful.
                                           Defaults to None.
-            return_url (str, optional): web address to redirect the user after payment is successful.
-                                          Defaults to None.
+            return_url (str, optional): web address to redirect the user after payment is
+                                        successful. Defaults to None.
             customization (dict, optional): customization, currently 'title' and 'description'
                                             are available. Defaults to None.
             headers(dict, optional): header to attach on the request. Default to None

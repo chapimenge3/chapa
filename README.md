@@ -1,5 +1,6 @@
 # Chapa
 
+[![Linter](https://github.com/chapimenge3/chapa/actions/workflows/Linter.yml/badge.svg)](https://github.com/chapimenge3/chapa/actions/workflows/Linter.yml)
 [![Version](https://img.shields.io/static/v1?label=version&message=0.0.1&color=green)](https://travis-ci.com/chapimenge3/chapa)
 [![Build](https://github.com/chapimenge3/chapa/actions/workflows/Linter.yml/badge.svg)](https://travis-ci.com/chapimenge3/chapa)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://choosealicense.com/licenses/mit)

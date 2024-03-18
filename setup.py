@@ -1,15 +1,14 @@
-from ensurepip import version
 import setuptools
 import os
 
 with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
-version = os.environ.get('CHAPA_VERSION', '0.1.0')
+version_number = os.environ.get('CHAPA_VERSION', '0.1.0')
 
 setuptools.setup(
     name='chapa',
-    version=version,
+    version=version_number,
     author='Temkin Mengistu (Chapi)',
     author_email='chapimenge3@gmail.com',
     description='Python SDK for Chapa API https://developer.chapa.co',

@@ -1,6 +1,11 @@
 """
-Chapa Webhook API
+Chapa Webhook Utilities Module
 """
+import hmac
+import hashlib
+import json
+
+
 WEBHOOKS_EVENT_DESCRIPTION = {
     'charge.dispute.create': 'Dispute against company created.',
     'charge.dispute.remind': 'Reminder of an unresolved dispute against company.',
@@ -25,4 +30,20 @@ WEBHOOKS_EVENT_DESCRIPTION = {
     'issuingauthentication.created': 	'An authorization has been created.',
 }
 
-WEBHOOK_EVENT = WEBHOOKS_EVENT_DESCRIPTION.keys()
+WEBHOOK_EVENTS = WEBHOOKS_EVENT_DESCRIPTION.keys()
+
+
+def verify_webhook(secret_key: str, body: dict, chapa_signature: str) -> bool:
+    """
+    Verify the webhook request
+
+    Args:
+        secret_key (str): The secret key
+        body (dict): The request body
+        chapa_signature (str): The signature from the request headers
+
+    Returns:
+        bool: True if the request is valid, False otherwise
+    """
+    signature = hmac.new(secret_key.encode(), json.dumps(body).encode(), hashlib.sha256).hexdigest()
+    return signature == chapa_signature

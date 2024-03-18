@@ -5,7 +5,7 @@ import os
 with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
-version = os.environ.get('CHAPA_VERSION', '0.0.5')
+version = os.environ.get('CHAPA_VERSION', '0.1.0')
 
 setuptools.setup(
     name='chapa',
@@ -32,6 +32,6 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'requests',
+        'httpx>=0.27.0',
     ],
 )

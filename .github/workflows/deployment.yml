@@ -31,7 +31,9 @@ jobs:
         python -m pip install build
         python -m pip install wheel twine setuptools
     - name: Build a binary wheel and a source tarball
-      run: python -m build
+      run: |
+        rm -rf dist/
+        python -m build
 
     - name: Publish distribution 📦 to PyPI
       run: python -m twine upload dist/* --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
